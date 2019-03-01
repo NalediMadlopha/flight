@@ -20,6 +20,8 @@ ext {
     versionGoogleMapsService = '16.1.0'
     versionGoogleLocationService = '16.0.0'
     versionRetrofit = '2.5.0'
+    versionCoroutinesCore = '1.1.1'
+    versionCoroutinesAndroid = '1.0.1'
 
     versionEspressoCore = '3.1.2-alpha01'
     versionJunit = '1.0.0'
@@ -50,7 +52,9 @@ ext {
         googleMapsService:          "com.google.android.gms:play-services-maps:${versionGoogleMapsService}",
         googleLocationService:      "com.google.android.gms:play-services-location:${versionGoogleLocationService}",
         retrofit:                   "com.squareup.retrofit2:retrofit:${versionRetrofit}",
-        retrofitConverterGson:      "com.squareup.retrofit2:converter-gson:${versionRetrofit}"
+        retrofitConverterGson:      "com.squareup.retrofit2:converter-gson:${versionRetrofit}",
+        coroutinesCore:             "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versionCoroutinesCore}",
+        coroutinesAndroid:          "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versionCoroutinesAndroid}"
     ]
 
     testDependencies = [
