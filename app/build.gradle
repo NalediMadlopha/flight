@@ -50,6 +50,8 @@ dependencies {
     implementation              thirdPartyDependencies.material
     implementation              thirdPartyDependencies.retrofit
     implementation              thirdPartyDependencies.retrofitConverterGson
+    implementation              thirdPartyDependencies.coroutinesCore
+    implementation              thirdPartyDependencies.coroutinesAndroid
 
     testImplementation          testDependencies.junit
     testImplementation          testDependencies.mockito
