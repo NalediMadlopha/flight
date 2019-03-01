@@ -1,0 +1,65 @@
+ext {
+    versionAndroidMinSdk = 21
+    versionAndroidTargetSdk = 28
+    versionAndroidCompileSdk = 28
+    versionCode = 1
+    versionName = '1.0'
+
+    versionAppcompat = '1.0.2'
+    versionConstraintlayout = '1.1.3'
+    versionCoreKtx = '1.1.0-alpha04'
+    versionLegacySupport = '1.0.0'
+    versionLifecycleExtensions = '2.0.0'
+    versionLifecycleCompiler = '2.0.0'
+    versionRoomRuntime = '2.0.0'
+    versionRoomCompiler = '2.0.0'
+
+    versionDagger = '2.17'
+    versionGson = '2.8.5'
+    versionMaterial = '1.0.0'
+    versionGoogleMapsService = '16.1.0'
+    versionGoogleLocationService = '16.0.0'
+    versionRetrofit = '2.5.0'
+
+    versionEspressoCore = '3.1.2-alpha01'
+    versionJunit = '1.0.0'
+    versionMockito = '2.23.4'
+    versionRetrofitMock = '2.0.0' // Not used yet
+    versionRobolectric = '4.2'
+    versionTestRunner = '1.1.2-alpha01'
+
+    androidDependencies = [
+        appcompat:                  "androidx.appcompat:appcompat:${versionAppcompat}",
+        constraintlayout:           "androidx.constraintlayout:constraintlayout:${versionConstraintlayout}",
+        coreKtx:                    "androidx.core:core-ktx:${versionCoreKtx}",
+        legacySupport:              "androidx.legacy:legacy-support-v4:${versionLegacySupport}",
+        lifecycleExtensions:        "androidx.lifecycle:lifecycle-extensions:${versionLifecycleExtensions}",
+        lifecycleCompiler:          "androidx.lifecycle:lifecycle-extensions:${versionLifecycleCompiler}",
+        roomRuntime:                "androidx.room:room-runtime:${versionRoomRuntime}",
+        roomCompiler:               "androidx.room:room-runtime:${versionRoomCompiler}"
+    ]
+
+    thirdPartyDependencies = [
+        dagger:                     "com.google.dagger:dagger:${versionDagger}",
+        daggerAndroid:              "com.google.dagger:dagger-android:${versionDagger}",
+        daggerAndroidSupport:       "com.google.dagger:dagger-android-support:${versionDagger}",
+        daggerCompiler:             "com.google.dagger:dagger-compiler:${versionDagger}",
+        daggerAndroidProcessor:     "com.google.dagger:dagger-android-processor:${versionDagger}",
+        gson:                       "com.google.code.gson:gson:${versionGson}", // Not used yet
+        material:                   "com.google.android.material:material:${versionMaterial}",
+        googleMapsService:          "com.google.android.gms:play-services-maps:${versionGoogleMapsService}",
+        googleLocationService:      "com.google.android.gms:play-services-location:${versionGoogleLocationService}",
+        retrofit:                   "com.squareup.retrofit2:retrofit:${versionRetrofit}",
+        retrofitConverterGson:      "com.squareup.retrofit2:converter-gson:${versionRetrofit}"
+    ]
+
+    testDependencies = [
+        espressoCore:               "androidx.test.espresso:espresso-core:${versionEspressoCore}",
+        junit:                      "androidx.test.ext:junit:${versionJunit}",
+        mockito:                    "org.mockito:mockito-core:${versionMockito}",
+        retrofitMock:               "com.squareup.retrofit2:retrofit-mock:${versionRetrofitMock}",
+        testRunner:                 "androidx.test:runner:${versionTestRunner}",
+        robolectric:                "org.robolectric:robolectric:${versionRobolectric}"
+    ]
+
+}
