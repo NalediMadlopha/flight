@@ -81,7 +81,7 @@ class AviationEdgeServiceTest {
 
     @Test
     fun getCity_should_return_an_error_response_when_the_api_returns_an_error_response() {
-        val call = mockErrorServiceCall.getCity(iataCode = "JFK")
+        val call = mockErrorServiceCall.getCity(codeIataCity = "JFK")
         val response = call.execute()
 
         assertFalse(response.isSuccessful)
@@ -89,7 +89,7 @@ class AviationEdgeServiceTest {
 
     @Test
     fun getCity_should_return_a_success_response_when_the_api_returns_a_success_response() {
-        val call = mockSuccessServiceCall.getCity(iataCode = "JFK")
+        val call = mockSuccessServiceCall.getCity(codeIataCity = "JFK")
         val response = call.execute()
 
         assertTrue(response.isSuccessful)
@@ -105,8 +105,8 @@ class AviationEdgeServiceTest {
             return service.returning(Calls.response(errorResponse)).getAirportsSchedule(iataCode = iataCode, type = type)
         }
 
-        override fun getCity(apiKey: String, iataCode: String): Call<List<City>> {
-            return service.returning(Calls.response(errorResponse)).getCity(iataCode = iataCode)
+        override fun getCity(apiKey: String, codeIataCity: String): Call<List<City>> {
+            return service.returning(Calls.response(errorResponse)).getCity(codeIataCity = codeIataCity)
         }
 
     }
@@ -121,8 +121,8 @@ class AviationEdgeServiceTest {
             return service.returningResponse(Response.success(listOf<FlightSchedule>())).getAirportsSchedule(apiKey, iataCode, type)
         }
 
-        override fun getCity(apiKey: String, iataCode: String): Call<List<City>> {
-            return service.returningResponse(Response.success(listOf<City>())).getCity(apiKey, iataCode)
+        override fun getCity(apiKey: String, codeIataCity: String): Call<List<City>> {
+            return service.returningResponse(Response.success(listOf<City>())).getCity(apiKey, codeIataCity)
         }
 
     }
@@ -130,7 +130,7 @@ class AviationEdgeServiceTest {
     companion object {
 
         private val errorResponse = Response.error<JsonObject>(
-        404, ResponseBody.create(MediaType.parse("application/json"), "{ error }")
+            404, ResponseBody.create(MediaType.parse("application/json"), "{ error: { text: No Record Found } }")
         )
 
     }
