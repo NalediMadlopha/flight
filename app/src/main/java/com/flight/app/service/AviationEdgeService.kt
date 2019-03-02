@@ -30,7 +30,7 @@ interface AviationEdgeService {
     @GET(PATH_CITY_DATABASE)
     fun getCity(
         @Query(QUERY_API_KEY) apiKey: String = BuildConfig.FLIGHT_AVIATION_EDGE_API_KEY,
-        @Query(QUERY_CODE_IATA_CITY) iataCode: String
+        @Query(QUERY_CODE_IATA_CITY) codeIataCity: String
     ) : Call<List<City>>
 
     companion object {
