@@ -25,10 +25,16 @@ android {
     buildTypes {
         debug {
             testCoverageEnabled true
+
+            buildConfigField 'String', "FLIGHT_AVIATION_EDGE_API_KEY", FLIGHT_AVIATION_EDGE_API_KEY
+            buildConfigField 'String', "FLIGHT_GOOGLE_API_KEY", FLIGHT_GOOGLE_API_KEY
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField 'String', "FLIGHT_AVIATION_EDGE_API_KEY", FLIGHT_AVIATION_EDGE_API_KEY
+            buildConfigField 'String', "FLIGHT_GOOGLE_API_KEY", FLIGHT_GOOGLE_API_KEY
         }
     }
 }
