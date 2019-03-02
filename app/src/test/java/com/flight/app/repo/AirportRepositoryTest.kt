@@ -44,110 +44,98 @@ class AirportRepositoryTest {
 
     @Test
     fun getNearbyAirports_should_execute_a_call_to_the_service() {
-        val lat = "-26.1304"; val lng = "28.2096"; val distance = "5000.0"
+        `when`(mockService.getNearbyAirports(lat = LAT, lng = LNG, distance = DISTANCE)).thenReturn(mockAirportListCall)
 
-        `when`(mockService.getNearbyAirports(lat = lat, lng = lng, distance = distance)).thenReturn(mockAirportListCall)
-
-        repository.getNearbyAirports(lat, lng, distance)
+        repository.getNearbyAirports(LAT, LNG, DISTANCE)
 
         verify(mockAirportListCall).execute()
     }
 
     @Test
     fun getNearbyAirports_should_return_an_error_response_when_the_service_returns_an_error_response() {
-        val lat = "-26.1304"; val lng = "28.2096"; val distance = "5000.0"
-
-        `when`(mockService.getNearbyAirports(lat = lat, lng = lng, distance = distance)).thenReturn(mockAirportListCall)
+        `when`(mockService.getNearbyAirports(lat = LAT, lng = LNG, distance = DISTANCE)).thenReturn(mockAirportListCall)
         `when`(mockAirportListCall.execute()).thenReturn(errorResponse(listOf()))
 
-        val response = repository.getNearbyAirports(lat, lng, distance)
+        val response = repository.getNearbyAirports(LAT, LNG, DISTANCE)
 
         assertFalse(response.isSuccessful)
     }
 
     @Test
     fun getNearbyAirports_should_return_a_success_response_when_the_service_returns_a_success_response() {
-        val lat = "-26.1304"; val lng = "28.2096"; val distance = "5000.0"
-
-        `when`(mockService.getNearbyAirports(lat = lat, lng = lng, distance = distance)).thenReturn(mockAirportListCall)
+        `when`(mockService.getNearbyAirports(lat = LAT, lng = LNG, distance = DISTANCE)).thenReturn(mockAirportListCall)
         `when`(mockAirportListCall.execute()).thenReturn(Response.success(listOf()))
 
-        val response = repository.getNearbyAirports(lat, lng, distance)
+        val response = repository.getNearbyAirports(LAT, LNG, DISTANCE)
 
         assertTrue(response.isSuccessful)
     }
 
     @Test
     fun getAirportsSchedule_should_execute_a_call_to_the_service() {
-        val iataCode = "JFK"; val type = "departure"
+        `when`(mockService.getAirportsSchedule(iataCode = IATA_CODE, type = TYPE)).thenReturn(mockFlightScheduleListCall)
 
-        `when`(mockService.getAirportsSchedule(iataCode = iataCode, type = type)).thenReturn(mockFlightScheduleListCall)
-
-        repository.getAirportsSchedule(iataCode, type)
+        repository.getAirportsSchedule(IATA_CODE, TYPE)
 
         verify(mockFlightScheduleListCall).execute()
     }
 
     @Test
     fun getAirportsSchedule_should_return_an_error_response_when_the_service_returns_an_error_response() {
-        val iataCode = "JFK"; val type = "departure"
-
-        `when`(mockService.getAirportsSchedule(iataCode = iataCode, type = type)).thenReturn(mockFlightScheduleListCall)
+        `when`(mockService.getAirportsSchedule(iataCode = IATA_CODE, type = TYPE)).thenReturn(mockFlightScheduleListCall)
         `when`(mockFlightScheduleListCall.execute()).thenReturn(errorResponse(listOf()))
 
-        val response = repository.getAirportsSchedule(iataCode, type)
+        val response = repository.getAirportsSchedule(IATA_CODE, TYPE)
 
         assertFalse(response.isSuccessful)
     }
 
     @Test
     fun getAirportsSchedule_should_return_a_success_response_when_the_service_returns_a_success_response() {
-        val iataCode = "JFK"; val type = "departure"
-
-        `when`(mockService.getAirportsSchedule(iataCode = iataCode, type = type)).thenReturn(mockFlightScheduleListCall)
+        `when`(mockService.getAirportsSchedule(iataCode = IATA_CODE, type = TYPE)).thenReturn(mockFlightScheduleListCall)
         `when`(mockFlightScheduleListCall.execute()).thenReturn(Response.success(listOf()))
 
-        val response = repository.getAirportsSchedule(iataCode, type)
+        val response = repository.getAirportsSchedule(IATA_CODE, TYPE)
 
         assertTrue(response.isSuccessful)
     }
 
     @Test
     fun getCity_should_execute_a_call_to_the_service() {
-        val codeIataCity = "JFK"
+        `when`(mockService.getCity(codeIataCity = CODE_IATA_CITY)).thenReturn(mockCityListCall)
 
-        `when`(mockService.getCity(codeIataCity = codeIataCity)).thenReturn(mockCityListCall)
-
-        repository.getCity(codeIataCity)
+        repository.getCity(CODE_IATA_CITY)
 
         verify(mockCityListCall).execute()
     }
 
     @Test
     fun getCity_should_return_an_error_response_when_the_service_returns_an_error_response() {
-        val codeIataCity = "JFK"
-
-        `when`(mockService.getCity(codeIataCity = codeIataCity)).thenReturn(mockCityListCall)
+        `when`(mockService.getCity(codeIataCity = CODE_IATA_CITY)).thenReturn(mockCityListCall)
         `when`(mockCityListCall.execute()).thenReturn(errorResponse(listOf()))
 
-        val response = repository.getCity(codeIataCity)
+        val response = repository.getCity(CODE_IATA_CITY)
 
         assertFalse(response.isSuccessful)
     }
 
     @Test
     fun getCity_should_return_a_success_response_when_the_service_returns_a_success_response() {
-        val codeIataCity = "JFK"
-
-        `when`(mockService.getCity(codeIataCity = codeIataCity)).thenReturn(mockCityListCall)
+        `when`(mockService.getCity(codeIataCity = CODE_IATA_CITY)).thenReturn(mockCityListCall)
         `when`(mockCityListCall.execute()).thenReturn(Response.success(listOf()))
 
-        val response = repository.getCity(codeIataCity)
+        val response = repository.getCity(CODE_IATA_CITY)
 
         assertTrue(response.isSuccessful)
     }
 
     companion object {
+        private const val IATA_CODE = "JFK"
+        private const val TYPE = "departure"
+        private const val CODE_IATA_CITY = "JFK"
+        private const val LAT = "-26.1304"
+        private const val LNG = "28.2096"
+        private const val DISTANCE = "5000.0"
 
         fun <T> errorResponse(@NonNull dataType: T): Response<T> {
             return Response.error<T>(
