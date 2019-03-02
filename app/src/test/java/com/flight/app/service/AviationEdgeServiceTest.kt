@@ -130,7 +130,7 @@ class AviationEdgeServiceTest {
     companion object {
 
         private val errorResponse = Response.error<JsonObject>(
-        404, ResponseBody.create(MediaType.parse("application/json"), "{ error: { text: No Record Found } }")
+            404, ResponseBody.create(MediaType.parse("application/json"), "{ error: { text: No Record Found } }")
         )
 
     }
