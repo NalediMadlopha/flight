@@ -31,7 +31,7 @@ interface AviationEdgeService {
     fun getCity(
         @Query(QUERY_API_KEY) apiKey: String = BuildConfig.FLIGHT_AVIATION_EDGE_API_KEY,
         @Query(QUERY_CODE_IATA_CITY) codeIataCity: String
-    ) : Call<List<City>>
+    ) : Call<City>
 
     companion object {
         private const val PATH_NEARBY = "/v2/public/nearby"

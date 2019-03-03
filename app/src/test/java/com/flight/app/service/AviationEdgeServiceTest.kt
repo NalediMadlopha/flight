@@ -105,7 +105,7 @@ class AviationEdgeServiceTest {
             return service.returning(Calls.response(errorResponse)).getAirportsSchedule(iataCode = iataCode, type = type)
         }
 
-        override fun getCity(apiKey: String, codeIataCity: String): Call<List<City>> {
+        override fun getCity(apiKey: String, codeIataCity: String): Call<City> {
             return service.returning(Calls.response(errorResponse)).getCity(codeIataCity = codeIataCity)
         }
 
@@ -121,13 +121,16 @@ class AviationEdgeServiceTest {
             return service.returningResponse(Response.success(listOf<FlightSchedule>())).getAirportsSchedule(apiKey, iataCode, type)
         }
 
-        override fun getCity(apiKey: String, codeIataCity: String): Call<List<City>> {
-            return service.returningResponse(Response.success(listOf<City>())).getCity(apiKey, codeIataCity)
+        override fun getCity(apiKey: String, codeIataCity: String): Call<City> {
+            return service.returningResponse(Response.success(city())).getCity(apiKey, codeIataCity)
         }
 
     }
 
     companion object {
+
+        private fun city() = City("", "", "", "",
+            "", "", "", "", "", "")
 
         private val errorResponse = Response.error<JsonObject>(
             404, ResponseBody.create(MediaType.parse("application/json"), "{ error: { text: No Record Found } }")
