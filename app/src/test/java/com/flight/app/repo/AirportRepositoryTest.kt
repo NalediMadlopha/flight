@@ -1,6 +1,5 @@
 package com.flight.app.repo
 
-import androidx.annotation.NonNull
 import com.flight.app.model.Airport
 import com.flight.app.model.City
 import com.flight.app.model.FlightSchedule
@@ -54,7 +53,7 @@ class AirportRepositoryTest {
     @Test
     fun getNearbyAirports_should_return_an_error_response_when_the_service_returns_an_error_response() {
         `when`(mockService.getNearbyAirports(lat = LAT, lng = LNG, distance = DISTANCE)).thenReturn(mockAirportListCall)
-        `when`(mockAirportListCall.execute()).thenReturn(errorResponse(listOf()))
+        `when`(mockAirportListCall.execute()).thenReturn(errorResponse())
 
         val response = repository.getNearbyAirports(LAT, LNG, DISTANCE)
 
@@ -75,7 +74,7 @@ class AirportRepositoryTest {
     fun getAirportsSchedule_should_execute_a_call_to_the_service() {
         `when`(mockService.getAirportsSchedule(iataCode = IATA_CODE, type = TYPE)).thenReturn(mockFlightScheduleListCall)
 
-        repository.getAirportsSchedule(IATA_CODE, TYPE)
+        repository.getAirportSchedule(IATA_CODE, TYPE)
 
         verify(mockFlightScheduleListCall).execute()
     }
@@ -83,9 +82,9 @@ class AirportRepositoryTest {
     @Test
     fun getAirportsSchedule_should_return_an_error_response_when_the_service_returns_an_error_response() {
         `when`(mockService.getAirportsSchedule(iataCode = IATA_CODE, type = TYPE)).thenReturn(mockFlightScheduleListCall)
-        `when`(mockFlightScheduleListCall.execute()).thenReturn(errorResponse(listOf()))
+        `when`(mockFlightScheduleListCall.execute()).thenReturn(errorResponse())
 
-        val response = repository.getAirportsSchedule(IATA_CODE, TYPE)
+        val response = repository.getAirportSchedule(IATA_CODE, TYPE)
 
         assertFalse(response.isSuccessful)
     }
@@ -95,7 +94,7 @@ class AirportRepositoryTest {
         `when`(mockService.getAirportsSchedule(iataCode = IATA_CODE, type = TYPE)).thenReturn(mockFlightScheduleListCall)
         `when`(mockFlightScheduleListCall.execute()).thenReturn(Response.success(listOf()))
 
-        val response = repository.getAirportsSchedule(IATA_CODE, TYPE)
+        val response = repository.getAirportSchedule(IATA_CODE, TYPE)
 
         assertTrue(response.isSuccessful)
     }
@@ -112,7 +111,7 @@ class AirportRepositoryTest {
     @Test
     fun getCity_should_return_an_error_response_when_the_service_returns_an_error_response() {
         `when`(mockService.getCity(codeIataCity = CODE_IATA_CITY)).thenReturn(mockCityListCall)
-        `when`(mockCityListCall.execute()).thenReturn(errorResponse(listOf()))
+        `when`(mockCityListCall.execute()).thenReturn(errorResponse())
 
         val response = repository.getCity(CODE_IATA_CITY)
 
@@ -137,7 +136,7 @@ class AirportRepositoryTest {
         private const val LNG = "28.2096"
         private const val DISTANCE = "5000.0"
 
-        fun <T> errorResponse(@NonNull dataType: T): Response<T> {
+        fun <T> errorResponse(): Response<T> {
             return Response.error<T>(
                 404, ResponseBody.create(MediaType.parse("application/json"), "{ error: { text: No Record Found } }")
             )
