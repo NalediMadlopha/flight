@@ -27,7 +27,7 @@ class AirportRepositoryTest {
     @Mock
     private lateinit var mockFlightScheduleListCall: Call<List<FlightSchedule>>
     @Mock
-    private lateinit var mockCityListCall: Call<List<City>>
+    private lateinit var mockCityListCall: Call<City>
 
     @Before
     fun setUp() {
@@ -121,7 +121,7 @@ class AirportRepositoryTest {
     @Test
     fun getCity_should_return_a_success_response_when_the_service_returns_a_success_response() {
         `when`(mockService.getCity(codeIataCity = CODE_IATA_CITY)).thenReturn(mockCityListCall)
-        `when`(mockCityListCall.execute()).thenReturn(Response.success(listOf()))
+        `when`(mockCityListCall.execute()).thenReturn(Response.success(city()))
 
         val response = repository.getCity(CODE_IATA_CITY)
 
@@ -135,6 +135,9 @@ class AirportRepositoryTest {
         private const val LAT = "-26.1304"
         private const val LNG = "28.2096"
         private const val DISTANCE = "5000.0"
+
+        private fun city() = City("", "", "", "",
+            "", "", "", "", "", "")
 
         fun <T> errorResponse(): Response<T> {
             return Response.error<T>(

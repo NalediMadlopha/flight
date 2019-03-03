@@ -32,7 +32,7 @@ open class AirportRepository
         }
     }
 
-    override fun getCity(codeIataCity: String): Response<List<City>> {
+    override fun getCity(codeIataCity: String): Response<City> {
         return try {
             service.getCity(codeIataCity = codeIataCity).execute()
         } catch (e: IllegalStateException) {

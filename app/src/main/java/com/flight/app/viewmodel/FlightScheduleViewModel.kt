@@ -17,6 +17,17 @@ class FlightScheduleViewModel @VisibleForTesting constructor(
         this.view = view
     }
 
+    fun fetchCity(codeIataCity: String) {
+        val response = repository.getCity(codeIataCity)
+        val data = response.body()
+
+        if (response.isSuccessful && data != null) {
+            view.displayAirportDetails(data)
+        } else {
+            view.displayError()
+        }
+    }
+
     fun fetchAirportSchedule(iataCode: String, type: String) {
         val response = repository.getAirportSchedule(iataCode, type)
         val data = response.body()

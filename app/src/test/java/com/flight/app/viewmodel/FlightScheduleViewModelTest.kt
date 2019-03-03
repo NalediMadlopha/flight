@@ -38,8 +38,46 @@ class FlightScheduleViewModelTest {
     }
 
     @Test
-    fun fetchAirportSchedule_should_get_airport_schedule_from_the_repository() {
-        `when`(mockRepository.getAirportSchedule("", "")).thenReturn(errorResponse())
+    fun fetchCity_should_get_city_data_from_the_repository() {
+        `when`(mockRepository.getCity("")).thenReturn(successResponse(null))
+
+        viewModel.fetchCity("")
+
+        verify(mockRepository).getCity("")
+    }
+
+    @Test
+    fun fetchCity_displayError_when_response_returned_is_not_successful() {
+        `when`(mockRepository.getCity("")).thenReturn(errorResponse())
+
+        viewModel.fetchCity("")
+
+        verify(mockView).displayError()
+    }
+
+    @Test
+    fun fetchCity_displayError_when_response_returned_successful_with_null_data() {
+        `when`(mockRepository.getCity("")).thenReturn(successResponse(null))
+
+        viewModel.fetchCity("")
+
+        verify(mockView).displayError()
+    }
+
+    @Test
+    fun fetchCity_display_city_details_when_response_returned_is_successful_with_valid_data() {
+        val successResponse = successResponse(city())
+
+        `when`(mockRepository.getCity("")).thenReturn(successResponse)
+
+        viewModel.fetchCity("")
+
+        successResponse.body()?.let { verify(mockView).displayAirportDetails(it) }
+    }
+
+    @Test
+    fun fetchAirportSchedule_should_get_airport_schedule_data_from_the_repository() {
+        `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse(null))
 
         viewModel.fetchAirportSchedule("", "")
 
@@ -47,7 +85,16 @@ class FlightScheduleViewModelTest {
     }
 
     @Test
-    fun displayError_if_response_returned_is_not_successful() {
+    fun fetchAirportSchedule_displayError_when_response_returned_successful_with_null_data() {
+        `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse(null))
+
+        viewModel.fetchAirportSchedule("", "")
+
+        verify(mockView).displayError()
+    }
+
+    @Test
+    fun getAirportSchedule_displayError_when_response_returned_is_not_successful() {
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(errorResponse())
 
         viewModel.fetchAirportSchedule("", "")
@@ -56,7 +103,7 @@ class FlightScheduleViewModelTest {
     }
 
     @Test
-    fun displayError_if_response_returned_successful_with_null_data() {
+    fun getAirportSchedule_displayError_when_response_returned_successful_with_null_data() {
         val successResponse = successResponse<List<FlightSchedule>>(null)
 
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse)
@@ -67,7 +114,7 @@ class FlightScheduleViewModelTest {
     }
 
     @Test
-    fun displayEmptyData_if_response_returned_successful_with_empty_data() {
+    fun getAirportSchedule_displayEmptyData_when_response_returned_successful_with_empty_data() {
         val successResponse = successResponse<List<FlightSchedule>>(emptyList())
 
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse)
@@ -78,8 +125,8 @@ class FlightScheduleViewModelTest {
     }
 
     @Test
-    fun display_flight_schedule_if_response_returned_is_successful() {
-        val successResponse = successResponse(listOf(getFlightSchedule()))
+    fun getAirportSchedule_display_flight_schedule_when_response_returned_is_successful_with_valid_data() {
+        val successResponse = successResponse(listOf(flightSchedule()))
 
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse)
 
@@ -88,19 +135,13 @@ class FlightScheduleViewModelTest {
         verify(mockView).displayFlightSchedule(successResponse.body())
     }
 
+
     companion object {
 
-        fun <T> successResponse(@Nullable data: T?): Response<T> { return Response.success(data) }
+        private fun city() = City("", "", "", "",
+            "", "", "", "", "", "")
 
-        fun <T> errorResponse(): Response<T> {
-            return Response.error<T>(
-                404,
-                ResponseBody.create(MediaType.parse("application/json"),
-                    "{ error: { text: No Record Found } }")
-            )
-        }
-
-        fun getFlightSchedule(): FlightSchedule {
+        private fun flightSchedule(): FlightSchedule {
             val airline = Airline("", "", "")
             val arrival = Arrival("", "", "")
             val flight = Flight("", "", "")
@@ -111,6 +152,17 @@ class FlightScheduleViewModelTest {
                 Codeshared(airline, flight),
                 Departure("", "", "", ""),
                 flight, "", ""
+            )
+        }
+
+
+        fun <T> successResponse(@Nullable data: T?): Response<T> { return Response.success(data) }
+
+        fun <T> errorResponse(): Response<T> {
+            return Response.error<T>(
+                404,
+                ResponseBody.create(MediaType.parse("application/json"),
+                    "{ error: { text: No Record Found } }")
             )
         }
 

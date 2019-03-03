@@ -1,5 +1,6 @@
 package com.flight.app.view.flightschedule
 
+import com.flight.app.model.City
 import com.flight.app.model.FlightSchedule
 
 interface FlightScheduleView {
@@ -9,5 +10,7 @@ interface FlightScheduleView {
     fun displayEmptyData()
 
     fun displayFlightSchedule(flightScheduleList: List<FlightSchedule>?)
+
+    fun displayAirportDetails(cityList: City)
 
 }
