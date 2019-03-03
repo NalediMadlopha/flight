@@ -1,11 +1,40 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@android:color/transparent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="AppTheme.LargeText" parent="AppTheme">
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.WhiteLargeText" parent="AppTheme.LargeText">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.MediumText" parent="AppTheme">
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Medium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.BlueGrayMediumText" parent="AppTheme.MediumText">
+        <item name="android:textColor">@color/colorBlueGray</item>
+    </style>
+
+    <style name="AppTheme.SmallText" parent="AppTheme">
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Small</item>
+    </style>
+
+    <style name="AppTheme.WhiteSmallText" parent="AppTheme.SmallText">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.GraySmallText" parent="AppTheme.SmallText">
+        <item name="android:textColor">@android:color/darker_gray</item>
     </style>
 
 </resources>
