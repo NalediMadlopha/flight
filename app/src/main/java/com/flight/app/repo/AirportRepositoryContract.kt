@@ -9,7 +9,7 @@ interface AirportRepositoryContract {
 
     fun getNearbyAirports(lat: String, lng: String, distance: String) : Response<List<Airport>>
 
-    fun getAirportsSchedule(iataCode: String, type: String): Response<List<FlightSchedule>>
+    fun getAirportSchedule(iataCode: String, type: String): Response<List<FlightSchedule>>
 
     fun getCity(codeIataCity: String): Response<List<City>>
 
