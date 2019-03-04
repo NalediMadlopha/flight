@@ -22,7 +22,6 @@ class MapFragmentViewModelTest {
     @Mock
     private lateinit var mockApplication: Application
 
-
     @Before
     fun setUp() {
         initMocks(this)
