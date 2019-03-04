@@ -3,6 +3,7 @@ package com.flight.app.view.map
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -14,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.flight.app.model.Airport
+import com.flight.app.view.flightschedule.FlightScheduleActivity
 import com.flight.app.viewmodel.MapFragmentViewModel
 import com.flight.app.viewmodel.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,10 +24,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
 
-class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmentView {
+class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmentView, GoogleMap.OnMarkerClickListener {
 
     private lateinit var viewModel: MapFragmentViewModel
     private lateinit var googleMap: GoogleMap
@@ -49,6 +52,13 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmen
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
         this.googleMap.isMyLocationEnabled = true
+        googleMap.setOnMarkerClickListener(this)
+    }
+
+    // NB: At this point on the app the location permission has been granted
+    @SuppressLint("MissingPermission")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val application = activity?.application!!
         val locationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -80,9 +90,23 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmen
             val airportLocation = LatLng(airport.latitudeAirport.toDouble(), airport.longitudeAirport.toDouble())
 
             if (airport.distance.toDouble() < 5.0) {
-                this.googleMap.addMarker(MarkerOptions().position(airportLocation).title(airport.nameAirport))
+                this.googleMap.addMarker(MarkerOptions()
+                    .position(airportLocation)
+                    .title(airport.nameAirport)
+                    .snippet("${airport.codeIataCity}|${airport.codeIataAirport}")
+                )
             }
         }
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        val intent = Intent(context, FlightScheduleActivity::class.java)
+        intent.putExtra(SELECTED_AIRPORT_NAME, marker.title)
+        intent.putExtra(SELECTED_IATA_CODE, marker.snippet)
+
+        startActivity(intent)
+
+        return false
     }
 
     override fun displayError() {
@@ -107,6 +131,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmen
 
     companion object {
         private const val DISTANCE = 5000.0
+        private const val SELECTED_AIRPORT_NAME = "SELECTED_AIRPORT_NAME"
+        private const val SELECTED_IATA_CODE = "SELECTED_IATA_CODE"
     }
 
 }

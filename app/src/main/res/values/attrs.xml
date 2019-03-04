@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="LabelValueWidget">
+        <attr name="text_top" format="string" />
+        <attr name="text_bottom" format="string" />
+    </declare-styleable>
+
+</resources>

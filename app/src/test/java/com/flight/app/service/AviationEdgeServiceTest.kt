@@ -105,7 +105,7 @@ class AviationEdgeServiceTest {
             return service.returning(Calls.response(errorResponse)).getAirportsSchedule(iataCode = iataCode, type = type)
         }
 
-        override fun getCity(apiKey: String, codeIataCity: String): Call<City> {
+        override fun getCity(apiKey: String, codeIataCity: String): Call<List<City>> {
             return service.returning(Calls.response(errorResponse)).getCity(codeIataCity = codeIataCity)
         }
 
@@ -121,7 +121,7 @@ class AviationEdgeServiceTest {
             return service.returningResponse(Response.success(listOf<FlightSchedule>())).getAirportsSchedule(apiKey, iataCode, type)
         }
 
-        override fun getCity(apiKey: String, codeIataCity: String): Call<City> {
+        override fun getCity(apiKey: String, codeIataCity: String): Call<List<City>> {
             return service.returningResponse(Response.success(city())).getCity(apiKey, codeIataCity)
         }
 

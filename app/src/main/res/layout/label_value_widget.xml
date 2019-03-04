@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/labelValueWidgetLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/labelValueTopTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Label"
+        style="@style/AppTheme.GraySmallText" />
+
+    <TextView
+        android:id="@+id/labelValueBottomTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="05:30"
+        style="@style/AppTheme.BlueGrayMediumText" />
+
+</LinearLayout>
