@@ -57,8 +57,8 @@ class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmen
 
     // NB: At this point on the app the location permission has been granted
     @SuppressLint("MissingPermission")
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val application = activity?.application!!
         val locationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
