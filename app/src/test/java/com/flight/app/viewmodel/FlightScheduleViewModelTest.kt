@@ -41,7 +41,7 @@ class FlightScheduleViewModelTest {
     fun fetchCity_displayError_when_response_returned_is_not_successful() {
         `when`(mockRepository.getCity("")).thenReturn(errorResponse())
 
-        viewModel.fetchCity("")
+        viewModel.fetchCity()
 
         verify(mockView).displayError()
     }
@@ -50,7 +50,7 @@ class FlightScheduleViewModelTest {
     fun fetchCity_displayError_when_response_returned_successful_with_null_data() {
         `when`(mockRepository.getCity("")).thenReturn(successResponse(null))
 
-        viewModel.fetchCity("")
+        viewModel.fetchCity()
 
         verify(mockView).displayError()
     }
@@ -61,16 +61,16 @@ class FlightScheduleViewModelTest {
 
         `when`(mockRepository.getCity("")).thenReturn(successResponse)
 
-        viewModel.fetchCity("")
+        viewModel.fetchCity()
 
-        successResponse.body()?.let { verify(mockView).displayAirportDetails(it) }
+        successResponse.body()?.let { verify(mockView).displayAirportDetails(it[0]) }
     }
 
     @Test
     fun fetchAirportSchedule_should_get_airport_schedule_data_from_the_repository() {
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse(null))
 
-        viewModel.fetchAirportSchedule("", "")
+        viewModel.fetchAirportSchedule()
 
         verify(mockRepository).getAirportSchedule("", "")
     }
@@ -79,7 +79,7 @@ class FlightScheduleViewModelTest {
     fun fetchAirportSchedule_displayError_when_response_returned_successful_with_null_data() {
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse(null))
 
-        viewModel.fetchAirportSchedule("", "")
+        viewModel.fetchAirportSchedule()
 
         verify(mockView).displayError()
     }
@@ -88,7 +88,7 @@ class FlightScheduleViewModelTest {
     fun getAirportSchedule_displayError_when_response_returned_is_not_successful() {
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(errorResponse())
 
-        viewModel.fetchAirportSchedule("", "")
+        viewModel.fetchAirportSchedule()
 
         verify(mockView).displayError()
     }
@@ -99,7 +99,7 @@ class FlightScheduleViewModelTest {
 
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse)
 
-        viewModel.fetchAirportSchedule("", "")
+        viewModel.fetchAirportSchedule()
 
         verify(mockView).displayError()
     }
@@ -110,7 +110,7 @@ class FlightScheduleViewModelTest {
 
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse)
 
-        viewModel.fetchAirportSchedule("", "")
+        viewModel.fetchAirportSchedule()
 
         verify(mockView).displayEmptyData()
     }
@@ -121,16 +121,16 @@ class FlightScheduleViewModelTest {
 
         `when`(mockRepository.getAirportSchedule("", "")).thenReturn(successResponse)
 
-        viewModel.fetchAirportSchedule("", "")
+        viewModel.fetchAirportSchedule()
 
-        verify(mockView).displayFlightSchedule(successResponse.body())
+        successResponse.body()?.let { verify(mockView).displayFlightSchedule(it) }
     }
 
 
     companion object {
 
-        private fun city() = City("", "", "", "",
-            "", "", "", "", "", "")
+        private fun city() = listOf(City("", "", "", "",
+            "", "", "", "", "", ""))
 
         private fun flightSchedule(): FlightSchedule {
             val airline = Airline("", "", "")

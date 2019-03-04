@@ -9,8 +9,8 @@ interface FlightScheduleView {
 
     fun displayEmptyData()
 
-    fun displayFlightSchedule(flightScheduleList: List<FlightSchedule>?)
+    fun displayFlightSchedule(flightScheduleList: List<FlightSchedule>)
 
-    fun displayAirportDetails(cityList: City)
+    fun displayCityDetails(city: City)
 
 }
