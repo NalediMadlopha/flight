@@ -27,7 +27,7 @@ class AirportRepositoryTest {
     @Mock
     private lateinit var mockFlightScheduleListCall: Call<List<FlightSchedule>>
     @Mock
-    private lateinit var mockCityListCall: Call<City>
+    private lateinit var mockCityListCall: Call<List<City>>
 
     @Before
     fun setUp() {
@@ -136,8 +136,8 @@ class AirportRepositoryTest {
         private const val LNG = "28.2096"
         private const val DISTANCE = "5000.0"
 
-        private fun city() = City("", "", "", "",
-            "", "", "", "", "", "")
+        private fun city() = listOf(City("", "", "", "",
+            "", "", "", "", "", ""))
 
         fun <T> errorResponse(): Response<T> {
             return Response.error<T>(

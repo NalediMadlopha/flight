@@ -11,6 +11,6 @@ interface AirportRepositoryContract {
 
     fun getAirportSchedule(iataCode: String, type: String): Response<List<FlightSchedule>>
 
-    fun getCity(codeIataCity: String): Response<City>
+    fun getCity(codeIataCity: String): Response<List<City>>
 
 }
