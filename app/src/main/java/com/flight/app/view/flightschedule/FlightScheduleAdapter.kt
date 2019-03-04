@@ -1,15 +1,13 @@
 package com.flight.app.view.flightschedule
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.flight.app.model.FlightSchedule
+import com.flight.app.utils.Utils
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.flight_schedule_list_item.*
-import com.flight.app.utils.Utils
 
 class FlightScheduleAdapter(private val flightScheduleList: List<FlightSchedule>)
     : RecyclerView.Adapter<FlightScheduleAdapter.FlightScheduleViewHolder>() {
@@ -24,13 +22,12 @@ class FlightScheduleAdapter(private val flightScheduleList: List<FlightSchedule>
     }
 
     override fun onBindViewHolder(holder: FlightScheduleViewHolder, position: Int) {
-        holder.bind(flightScheduleList[position])
+        holder.bindData(flightScheduleList[position])
     }
 
     class FlightScheduleViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(flightSchedule: FlightSchedule) {
+        fun bindData(flightSchedule: FlightSchedule) {
             flightScheduleAirlineNameTextView.text = flightSchedule.airline.name
             flightScheduleStatusTextView.text = flightSchedule.status
 
