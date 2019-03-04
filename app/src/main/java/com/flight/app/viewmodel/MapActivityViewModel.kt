@@ -10,7 +10,7 @@ import com.flight.app.view.map.MapActivityView
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 
-class MapViewModel @VisibleForTesting constructor(
+class MapActivityViewModel @VisibleForTesting constructor(
     private val view: MapActivityView,
     @VisibleForTesting val googleApiAvailability: GoogleApiAvailability,
     application: Application

@@ -38,15 +38,6 @@ class FlightScheduleViewModelTest {
     }
 
     @Test
-    fun fetchCity_should_get_city_data_from_the_repository() {
-        `when`(mockRepository.getCity("")).thenReturn(successResponse(null))
-
-        viewModel.fetchCity("")
-
-        verify(mockRepository).getCity("")
-    }
-
-    @Test
     fun fetchCity_displayError_when_response_returned_is_not_successful() {
         `when`(mockRepository.getCity("")).thenReturn(errorResponse())
 
@@ -154,7 +145,6 @@ class FlightScheduleViewModelTest {
                 flight, "", ""
             )
         }
-
 
         fun <T> successResponse(@Nullable data: T?): Response<T> { return Response.success(data) }
 
