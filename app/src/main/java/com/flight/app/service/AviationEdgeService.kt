@@ -31,7 +31,7 @@ interface AviationEdgeService {
     fun getCity(
         @Query(QUERY_API_KEY) apiKey: String = BuildConfig.FLIGHT_AVIATION_EDGE_API_KEY,
         @Query(QUERY_CODE_IATA_CITY) codeIataCity: String
-    ) : Call<City>
+    ) : Call<List<City>>
 
     companion object {
         private const val PATH_NEARBY = "/v2/public/nearby"
@@ -42,7 +42,7 @@ interface AviationEdgeService {
         private const val QUERY_LNG = "lng"
         private const val QUERY_DISTANCE = "distance"
         private const val QUERY_IATA_CODE = "iataCode"
-        private const val QUERY_CODE_IATA_CITY = "codeiataCode"
+        private const val QUERY_CODE_IATA_CITY = "codeIataCity"
         private const val QUERY_TYPE = "type"
 
         const val BASE_URL = "http://aviation-edge.com/"
