@@ -23,24 +23,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancelChildren
-import kotlin.coroutines.CoroutineContext
 
 
-class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmentView, CoroutineScope {
-
-    private val job = SupervisorJob()
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
-    override fun onDestroy() {
-        super.onDestroy()
-        coroutineContext.cancelChildren()
-    }
+class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmentView {
 
     private lateinit var viewModel: MapFragmentViewModel
     private lateinit var googleMap: GoogleMap
