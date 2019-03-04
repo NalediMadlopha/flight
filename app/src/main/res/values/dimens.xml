@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_bar_layout_elevation">4dp</dimen>
+    <dimen name="collapsing_toolbar_layout_height">200dp</dimen>
+    <dimen name="card_view_padding">24dp</dimen>
+
+    <dimen name="flight_schedule_heading_text_padding">24dp</dimen>
+    <dimen name="flight_schedule_location_text_margin_start">12dp</dimen>
+    <dimen name="flight_schedule_airline_name_text_view_drawable_padding">12dp</dimen>
+    <dimen name="flight_schedule_status_text_view_drawable_padding">8dp</dimen>
+    <dimen name="flight_schedule_divider_margin">16dp</dimen>
+    <dimen name="flight_schedule_list_item_line_divider">1dp</dimen>
+</resources>
