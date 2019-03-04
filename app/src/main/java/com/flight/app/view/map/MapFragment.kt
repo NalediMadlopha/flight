@@ -1,23 +1,33 @@
 package com.flight.app.view.map
 
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.flight.app.R
+import androidx.lifecycle.ViewModelProviders
+import com.flight.app.model.Airport
+import com.flight.app.viewmodel.MapFragmentViewModel
+import com.flight.app.viewmodel.ViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 
+class MapFragment : Fragment(), OnMapReadyCallback, LocationListener, MapFragmentView {
 
-class MapFragment : Fragment(), OnMapReadyCallback {
-
+    private lateinit var viewModel: MapFragmentViewModel
     private lateinit var googleMap: GoogleMap
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -26,16 +36,77 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (childFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment)?.getMapAsync(this)
+        (childFragmentManager.findFragmentById(com.flight.app.R.id.map) as? SupportMapFragment)?.getMapAsync(this)
+
+        viewModel = ViewModelProviders.of(
+            this,
+            ViewModelFactory { MapFragmentViewModel(this, activity?.application!!) }
+        ).get(MapFragmentViewModel::class.java)
     }
 
+    // NB: At this point on the app the location permission has been granted
+    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
+        this.googleMap.isMyLocationEnabled = true
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        this.googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        this.googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        val application = activity?.application!!
+        val locationManager = application.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5L, 20F, this)
+    }
+
+    override fun onLocationChanged(location: Location) {
+        googleMap.clear()
+
+        val latitude = location.latitude
+        val longitude = location.longitude
+        val currentLatLng = LatLng(latitude, longitude)
+
+        val circleOptions = CircleOptions()
+            .center(currentLatLng)
+            .radius(DISTANCE)
+            .strokeWidth(0F)
+            .fillColor(0x220000FF)
+
+        googleMap.addCircle(circleOptions)
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 11f))
+        viewModel.fetchNearbyAirports(latitude.toString(), longitude.toString(), DISTANCE.toString())
+    }
+
+    override fun displayAirportMapMarkers(airportList: List<Airport>) {
+        for (airport in airportList) {
+            val airportLocation = LatLng(airport.latitudeAirport.toDouble(), airport.longitudeAirport.toDouble())
+
+            if (airport.distance.toDouble() < 5.0) {
+                this.googleMap.addMarker(MarkerOptions().position(airportLocation).title(airport.nameAirport))
+            }
+        }
+    }
+
+    override fun displayError() {
+        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+    }
+
+    override fun displayNoAirportNearby() {
+        Toast.makeText(context, "No airports", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        /* no-op */
+    }
+
+    override fun onProviderEnabled(provider: String?) {
+        /* no-op */
+    }
+
+    override fun onProviderDisabled(provider: String?) {
+        /* no-op */
+    }
+
+    companion object {
+        private const val DISTANCE = 5000.0
     }
 
 }

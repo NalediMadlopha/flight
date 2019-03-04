@@ -58,6 +58,8 @@ dependencies {
     implementation              thirdPartyDependencies.retrofitConverterGson
     implementation              thirdPartyDependencies.coroutinesCore
     implementation              thirdPartyDependencies.coroutinesAndroid
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
 
     testImplementation          testDependencies.junit
     testImplementation          testDependencies.mockito

@@ -17,6 +17,7 @@ class FlightScheduleViewModel @VisibleForTesting constructor(
         this.view = view
     }
 
+    // TODO: Remove this method
     fun fetchCity(codeIataCity: String) {
         val response = repository.getCity(codeIataCity)
         val data = response.body()

@@ -9,14 +9,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import com.flight.app.R
-import com.flight.app.viewmodel.MapViewModel
+import com.flight.app.viewmodel.MapActivityViewModel
 import com.flight.app.viewmodel.ViewModelFactory
 import com.google.android.gms.common.GoogleApiAvailability
 import kotlinx.android.synthetic.main.maps_activity.*
 
 class MapsActivity : AppCompatActivity(), MapActivityView {
 
-    private lateinit var viewModel: MapViewModel
+    private lateinit var viewModel: MapActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +24,8 @@ class MapsActivity : AppCompatActivity(), MapActivityView {
 
         viewModel = ViewModelProviders.of(
             this,
-            ViewModelFactory { MapViewModel(this, application) }
-        ).get(MapViewModel::class.java)
+            ViewModelFactory { MapActivityViewModel(this, application) }
+        ).get(MapActivityViewModel::class.java)
 
         viewModel.checkForGooglePlayServices()
     }

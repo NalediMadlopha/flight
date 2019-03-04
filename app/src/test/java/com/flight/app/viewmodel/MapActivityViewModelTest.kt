@@ -24,9 +24,9 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest= Config.NONE, sdk = [21])
-class MapViewModelTest {
+class MapActivityViewModelTest {
 
-    private lateinit var viewModel: MapViewModel
+    private lateinit var activityViewModel: MapActivityViewModel
 
     @Spy
     private val spyContext: Context = Robolectric.buildActivity(Activity::class.java).get()
@@ -43,17 +43,17 @@ class MapViewModelTest {
     fun setUp() {
         initMocks(this)
 
-        viewModel = MapViewModel(mockView, mockGoogleApiAvailability, mockApplication)
+        activityViewModel = MapActivityViewModel(mockView, mockGoogleApiAvailability, mockApplication)
     }
 
     @Test
     fun on_construction_GoogleApiAvailability_should_be_initialized() {
-        assertNotNull(MapViewModel(mockView, mockApplication).googleApiAvailability)
+        assertNotNull(MapActivityViewModel(mockView, mockApplication).googleApiAvailability)
     }
 
     @Test
     fun check_if_isGooglePlayServicesAvailable_is_invoked_when_checkForGooglePlayServices_executes() {
-        viewModel.checkForGooglePlayServices()
+        activityViewModel.checkForGooglePlayServices()
 
         verify(mockGoogleApiAvailability).isGooglePlayServicesAvailable(mockApplication)
     }
@@ -62,7 +62,7 @@ class MapViewModelTest {
     fun showUserResolvableError_if_GoogleApiAvailability_isUserResolvableError_return_true() {
         `when`(mockGoogleApiAvailability.isGooglePlayServicesAvailable(mockApplication)).thenReturn(ConnectionResult.SERVICE_MISSING)
 
-        viewModel.checkForGooglePlayServices()
+        activityViewModel.checkForGooglePlayServices()
 
         verify(mockView).displayUserResolvableError(mockGoogleApiAvailability, ConnectionResult.SERVICE_MISSING)
     }
@@ -71,7 +71,7 @@ class MapViewModelTest {
     fun showNotSupportedError_if_GoogleApiAvailability_isUserResolvableError_return_false() {
         `when`(mockGoogleApiAvailability.isGooglePlayServicesAvailable(mockApplication)).thenReturn(ConnectionResult.UNKNOWN)
 
-        viewModel.checkForGooglePlayServices()
+        activityViewModel.checkForGooglePlayServices()
 
         verify(mockView).displayNotSupportedError()
     }
@@ -81,7 +81,7 @@ class MapViewModelTest {
         `when`(mockGoogleApiAvailability.isGooglePlayServicesAvailable(mockApplication)).thenReturn(ConnectionResult.SUCCESS)
         `when`(mockPermissionChecker.checkSelfPermission(mockApplication)).thenReturn(PackageManager.PERMISSION_DENIED)
 
-        viewModel.checkForGooglePlayServices()
+        activityViewModel.checkForGooglePlayServices()
 
         verify(mockView).requestLocationPermission()
     }
@@ -91,7 +91,7 @@ class MapViewModelTest {
         `when`(mockGoogleApiAvailability.isGooglePlayServicesAvailable(mockApplication)).thenReturn(ConnectionResult.SUCCESS)
         `when`(mockPermissionChecker.checkSelfPermission(mockApplication)).thenReturn(PackageManager.PERMISSION_GRANTED)
 
-        viewModel.checkForGooglePlayServices()
+        activityViewModel.checkForGooglePlayServices()
 
         verify(mockView).displayMap()
     }
