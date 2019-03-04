@@ -5,7 +5,7 @@ Flight ia an app that displays the  airports based on a user's current location 
 
 The app make use of the Aviation Edge's api service for airport locations and flight details <https://aviation-edge.com/premium-api/>
 
-To run the app from Android Studio:
+To run the app from Android Studio, you need to setup the Aviation Edge API key following the steps below:
 
 1. Navigate to the location of the local `gradle.properties` file which is usually in the home directory in the `.gradle` folder. 
 `cd ~` navigate you to your home directory if you are using a Unix based machine. Alternatively use `cd ~/.gradle/` to land directly in the gradle directory
